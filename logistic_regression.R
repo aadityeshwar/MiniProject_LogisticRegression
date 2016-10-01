@@ -120,10 +120,13 @@ ever.wrkd.tab <- coef(summary(ever.wrkd))
 ever.wrkd.tab[, "Estimate"] <- exp(coef(ever.wrkd))
 ever.wrkd.tab
 
-plot(allEffects(ever.wrkd))
-
 ##   2. Predict the probability of working for each level of marital
 ##      status.
+
+# predict hypertension at those levels
+
+data.frame(Effect("r_maritl", ever.wrkd))
+plot(allEffects(ever.wrkd))
 
 ##   Note that the data is not perfectly clean and ready to be modeled. You
 ##   will need to clean up at least some of the variables before fitting
