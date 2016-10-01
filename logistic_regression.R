@@ -100,6 +100,24 @@ plot(allEffects(hyp.out))
 
 ##   1. Use glm to conduct a logistic regression to predict ever worked
 ##      (everwrk) using age (age_p) and marital status (r_maritl).
+
+levels(NH11$everwrk) # check levels of hypev
+levels(NH11$r_maritl) # check levels of r_maritl
+
+# collapse all"0 Under 14 years" & "9 Unknown marital status" values to NA
+NH11$r_maritl <- factor(NH11$r_maritl, levels = c("1 Married - spouse in household", "2 Married - spouse not in household",
+                                                  "3 Married - spouse in household unknown","4 Widowed",
+                                                  "5 Divorced","6 Separated","7 Never married",
+                                                  "8 Living with partner"))
+ 
+ever.wrkd <- glm(everwrk ~ age_p + r_maritl, data = NH11, family = "binomial")
+coef(summary(ever.wrkd))
+
+# Transforming Coefficients to Odds
+ever.wrkd.tab <- coef(summary(ever.wrkd))
+ever.wrkd.tab[, "Estimate"] <- exp(coef(ever.wrkd))
+ever.wrkd.tab
+
 ##   2. Predict the probability of working for each level of marital
 ##      status.
 
