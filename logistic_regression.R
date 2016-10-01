@@ -102,8 +102,10 @@ plot(allEffects(hyp.out))
 ##      (everwrk) using age (age_p) and marital status (r_maritl).
 
 levels(NH11$everwrk) # check levels of hypev
-levels(NH11$r_maritl) # check levels of r_maritl
+# Keep only "Yes" and "No" Values
+NH11$everwrk <- factor(NH11$everwrk, levels = c("1 Yes", "2 No"))
 
+levels(NH11$r_maritl) # check levels of r_maritl
 # collapse all"0 Under 14 years" & "9 Unknown marital status" values to NA
 NH11$r_maritl <- factor(NH11$r_maritl, levels = c("1 Married - spouse in household", "2 Married - spouse not in household",
                                                   "3 Married - spouse in household unknown","4 Widowed",
@@ -117,6 +119,8 @@ coef(summary(ever.wrkd))
 ever.wrkd.tab <- coef(summary(ever.wrkd))
 ever.wrkd.tab[, "Estimate"] <- exp(coef(ever.wrkd))
 ever.wrkd.tab
+
+plot(allEffects(ever.wrkd))
 
 ##   2. Predict the probability of working for each level of marital
 ##      status.
